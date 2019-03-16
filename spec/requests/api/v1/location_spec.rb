@@ -26,7 +26,7 @@ RSpec.describe 'Location', type: :request do
   end
 
   let(:invalid_location_id) { Faker::Number.number(5) }
-  let(:location) { create(:location) }
+  subject! { create(:location) }
 
   describe 'POST /v1/locations' do
     context 'params are blank' do
@@ -105,7 +105,7 @@ RSpec.describe 'Location', type: :request do
 
     context 'location_id is valid and params are invalid' do
       before(:each) do
-        patch "/v1/locations/#{location.id}", params: location_invalid_params
+        patch "/v1/locations/#{subject.id}", params: location_invalid_params
       end
 
       it 'returns 422 status' do
@@ -119,7 +119,7 @@ RSpec.describe 'Location', type: :request do
 
     context 'location_id is valid and params are valid' do
       before(:each) do
-        patch "/v1/locations/#{location.id}", params: location_params
+        patch "/v1/locations/#{subject.id}", params: location_params
       end
 
       it 'returns 200 status' do
@@ -155,7 +155,7 @@ RSpec.describe 'Location', type: :request do
 
     context 'location_id is valid' do
       before(:each) do
-        delete "/v1/locations/#{location.id}"
+        delete "/v1/locations/#{subject.id}"
       end
 
       it 'returns 204 status' do
@@ -181,7 +181,7 @@ RSpec.describe 'Location', type: :request do
 
     context 'location_id is valid' do
       before(:each) do
-        get "/v1/locations/#{location.id}"
+        get "/v1/locations/#{subject.id}"
       end
 
       it 'returns 200 status' do
@@ -189,10 +189,25 @@ RSpec.describe 'Location', type: :request do
       end
 
       it 'returns location details' do
-        expect(json['title']).to match(location.title)
-        expect(json['description']).to match(location.description)
-        expect(json['longitude']).to match(location.longitude)
-        expect(json['latitude']).to match(location.latitude)
+        expect(json['title']).to match(subject.title)
+        expect(json['description']).to match(subject.description)
+        expect(json['longitude']).to match(subject.longitude)
+        expect(json['latitude']).to match(subject.latitude)
+      end
+    end
+  end
+
+  describe 'GET /v1/locations' do
+    context 'listing' do
+      before(:each) do
+        get '/v1/locations'
+      end
+
+      it 'returns listing' do
+        expect(json.length).to be > 0
+        expect(json.collect { |location| location['title'] }.include?(subject.title)).to be true
+        expect(json.collect { |location| location['longitude'] }.include?(subject.longitude)).to be true
+        expect(json.collect { |location| location['latitude'] }.include?(subject.latitude)).to be true
       end
     end
   end
