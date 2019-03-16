@@ -35,6 +35,7 @@ group :development, :test do
   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
   gem 'rails-controller-testing'
 end
 
