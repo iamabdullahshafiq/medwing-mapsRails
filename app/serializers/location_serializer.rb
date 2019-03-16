@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: locations
@@ -12,5 +14,5 @@
 #
 
 class LocationSerializer < ActiveModel::Serializer
-  attributes :id, :title
+  attributes :id, :title, :description, :longitude, :latitude
 end
