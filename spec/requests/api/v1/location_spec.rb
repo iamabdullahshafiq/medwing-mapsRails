@@ -137,4 +137,30 @@ RSpec.describe 'Location', type: :request do
       end
     end
   end
+
+  describe 'DELETE /v1/locations/:location_id' do
+    context 'location_id is invalid' do
+      before(:each) do
+        delete "/v1/locations/#{invalid_location_id}"
+      end
+
+      it 'returns 404 status' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns couldn\'t find location message' do
+        expect_error("Couldn't find Location with 'id'=#{invalid_location_id}")
+      end
+    end
+
+    context 'location_id is valid' do
+      before(:each) do
+        delete "/v1/locations/#{location.id}"
+      end
+
+      it 'returns 204 status' do
+        expect(response).to have_http_status(204)
+      end
+    end
+  end
 end
