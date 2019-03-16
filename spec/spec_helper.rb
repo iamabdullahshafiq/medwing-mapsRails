@@ -13,6 +13,10 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'support/helpers/request_helpers'
+require 'support/helpers/json_helpers'
+require 'support/helpers/common_helpers'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -93,4 +97,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.include Helpers::JsonHelpers, type: :request
+  config.include Helpers::RequestHelpers, type: :request
+  config.include Helpers::CommonHelpers
 end
