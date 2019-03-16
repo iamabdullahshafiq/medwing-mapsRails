@@ -13,20 +13,15 @@ class V1::LocationsController < ApplicationController
 
   def create
     @location = Location.new(location_params)
+    @location.save
 
-    if @location.save
-      render json: @location, status: :created, location: @location
-    else
-      render json: @location.errors, status: :unprocessable_entity
-    end
+    render_response(@location)
   end
 
   def update
-    if @location.update(location_params)
-      render json: @location
-    else
-      render json: @location.errors, status: :unprocessable_entity
-    end
+    @location.update(location_params)
+
+    render_response(@location)
   end
 
   def destroy
@@ -34,11 +29,12 @@ class V1::LocationsController < ApplicationController
   end
 
   private
-    def set_location
-      @location = Location.find(params[:id])
-    end
 
-    def location_params
-      params.fetch(:location, {}).permit(:title, :description, :latitude, :longitude)
-    end
+  def set_location
+    @location = Location.find(params[:id])
+  end
+
+  def location_params
+    params.fetch(:location, {}).permit(:title, :description, :latitude, :longitude)
+  end
 end
