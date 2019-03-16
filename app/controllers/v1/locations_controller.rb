@@ -1,40 +1,44 @@
-class V1::LocationsController < ApplicationController
-  before_action :set_location, only: [:show, :update, :destroy]
+# frozen_string_literal: true
 
-  def index
-    @locations = Location.all
+module V1
+  class LocationsController < ApplicationController
+    before_action :set_location, only: %i[show update destroy]
 
-    render json: @locations
-  end
+    def index
+      @locations = Location.all
 
-  def show
-    render json: @location
-  end
+      render json: @locations
+    end
 
-  def create
-    @location = Location.new(location_params)
-    @location.save
+    def show
+      render json: @location
+    end
 
-    render_response(@location)
-  end
+    def create
+      @location = Location.new(location_params)
+      @location.save
 
-  def update
-    @location.update(location_params)
+      render_response(@location)
+    end
 
-    render_response(@location)
-  end
+    def update
+      @location.update(location_params)
 
-  def destroy
-    @location.destroy
-  end
+      render_response(@location)
+    end
 
-  private
+    def destroy
+      @location.destroy
+    end
 
-  def set_location
-    @location = Location.find(params[:id])
-  end
+    private
 
-  def location_params
-    params.fetch(:location, {}).permit(:title, :description, :latitude, :longitude)
+    def set_location
+      @location = Location.find(params[:id])
+    end
+
+    def location_params
+      params.fetch(:location, {}).permit(:title, :description, :latitude, :longitude)
+    end
   end
 end
