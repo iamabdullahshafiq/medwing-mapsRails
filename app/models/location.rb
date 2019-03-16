@@ -12,4 +12,7 @@
 #
 
 class Location < ApplicationRecord
+  validates :title, :latitude, :longitude, presence: true
+  validates :title, length: { maximum: 100 }
+  validates :latitude, :longitude, numericality: true
 end
