@@ -3,10 +3,10 @@
 # Table name: locations
 #
 #  id          :integer          not null, primary key
-#  title       :string
+#  title       :string(100)      not null
 #  description :text
-#  latitude    :float
-#  longitude   :float
+#  latitude    :float            not null
+#  longitude   :float            not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
