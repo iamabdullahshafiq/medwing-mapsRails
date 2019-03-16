@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2019_03_15_074314) do
 
   create_table "locations", force: :cascade do |t|
-    t.string "title"
+    t.string "title", limit: 100, null: false
     t.text "description"
-    t.float "latitude"
-    t.float "longitude"
+    t.float "latitude", null: false
+    t.float "longitude", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
