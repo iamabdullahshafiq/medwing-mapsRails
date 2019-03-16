@@ -163,4 +163,37 @@ RSpec.describe 'Location', type: :request do
       end
     end
   end
+
+  describe 'GET /v1/locations/:location_id' do
+    context 'location_id is invalid' do
+      before(:each) do
+        get "/v1/locations/#{invalid_location_id}"
+      end
+
+      it 'returns 404 status' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns couldn\'t find location message' do
+        expect_error("Couldn't find Location with 'id'=#{invalid_location_id}")
+      end
+    end
+
+    context 'location_id is valid' do
+      before(:each) do
+        get "/v1/locations/#{location.id}"
+      end
+
+      it 'returns 200 status' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns location details' do
+        expect(json['title']).to match(location.title)
+        expect(json['description']).to match(location.description)
+        expect(json['longitude']).to match(location.longitude)
+        expect(json['latitude']).to match(location.latitude)
+      end
+    end
+  end
 end
